@@ -1,5 +1,19 @@
 package com.mycompany.java_project;
 
 public class Product {
+    private int id;
+    private String name;
+    private float price;
+    private String addDate;
+    private byte[] picture;
+    
+    public Product(int pid, String pname, float pprice. String pAddDate, byte[] pimg)
+    {
+        this.id = pid;
+        this.name = pname;
+        this.price = pprice;
+        this.addDate = pAddDate;
+        this.picture = pimg;
+    }
     
 }
