@@ -54,7 +54,7 @@ public class Main_Window extends javax.swing.JFrame {
     public boolean checkInputs(){
         if(txt_name.getText() == null
            || txt_price.getText() == null
-           || txt_AddDate == null
+           || txt_AddDate.getDate() == null
           ){
             return false;
         }
@@ -184,6 +184,11 @@ public class Main_Window extends javax.swing.JFrame {
 
         Btn_Update.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Btn_Update.setText("Update");
+        Btn_Update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_UpdateActionPerformed(evt);
+            }
+        });
 
         Btn_Delete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Btn_Delete.setText("Delete");
@@ -320,6 +325,7 @@ public class Main_Window extends javax.swing.JFrame {
             File selectedFile = file.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
             lbl_image.setIcon(ResizeImage(path, null));
+            ImgPath = path;
         }
         else{
             System.out.println("No File Selected");
@@ -330,7 +336,7 @@ public class Main_Window extends javax.swing.JFrame {
         if(checkInputs() && ImgPath != null){
             try {
                 Connection con = getConnection();
-                PreparedStatement ps = con.prepareStatement("INERTS INTO products(name,price,add_date,image)" + "values(?,?,?,?)) ");
+                PreparedStatement ps = con.prepareStatement("INSERT INTO products(name,price,add_date,image)" + "values(?,?,?,?) ");
                 ps.setString(1,txt_name.getText());
                 ps.setString(2,txt_price.getText());
                 
@@ -341,7 +347,7 @@ public class Main_Window extends javax.swing.JFrame {
                 InputStream img = new FileInputStream(new File(ImgPath));
                 ps.setBlob(4,img);
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Data ");
+                JOptionPane.showMessageDialog(null, "Data Inserted");
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             } catch (FileNotFoundException ex) {
@@ -351,7 +357,35 @@ public class Main_Window extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "One or More Field are Empty");
         }
+        System.out.println("Name => "+txt_name.getText());
+        System.out.println("Price => "+txt_price.getText());
+        System.out.println("Image => "+ImgPath);
     }//GEN-LAST:event_Btn_InsertActionPerformed
+
+    private void Btn_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_UpdateActionPerformed
+        if(checkInputs() && txt_id.getText() !=null){
+            String UpdateQuery = null;
+            PreparedStatement ps = null;
+            Connection con = getConnection();
+            
+            //Update without image
+            if(ImgPath == null){
+                try {
+                    UpdateQuery = "UPDATE products SET name = ?, price = ?" + ", add_date = ? WHERE id = ?";
+                    ps = con.prepareStatement(UpdateQuery);
+                    
+                    ps.setString(1,txt_name.getText());
+                    ps.setString(2,txt_price.getText());
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_Btn_UpdateActionPerformed
 
     /**
      * @param args the command line arguments
