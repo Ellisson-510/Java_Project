@@ -378,7 +378,7 @@ public class Main_Window extends javax.swing.JFrame {
                     ps.setString(2,txt_price.getText());
                     
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String
+                    String addDate = dateFormat.format(txt_AddDate.getDate());
                     
                 } catch (SQLException ex) {
                     Logger.getLogger(Main_Window.class.getName()).log(Level.SEVERE, null, ex);
